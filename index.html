@@ -2,9 +2,16 @@
 <html>
 
 <head>
-<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-<meta content="utf-8" http-equiv="encoding">
-<script type="text/javascript">
+
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+
+	<!-- Styling -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<link href="./style.css" rel="stylesheet" media="screen">
+
+	<!-- JS for timers -->
+	<script type="text/javascript">
 
 	// Amount of seconds for one day/hour/minute
 	const ONE_DAY = 86400;
@@ -53,7 +60,7 @@
 			hours = Math.floor( seconds/ ONE_HOUR );
 			seconds %= ONE_HOUR;
 		}		
-	
+
 		if( seconds > ONE_MINUTE ) {
 			mins = Math.floor( seconds/ ONE_MINUTE );
 			seconds %= ONE_MINUTE;
@@ -156,6 +163,7 @@
 		}
 
 	}
+
 </script>
 </head>
 
@@ -164,10 +172,14 @@
 	<h1>Perfect Timing!</h1>
 	<h3> A stopwatch that counts up and another stopwatch that counts down.</h3>
 
-	Seconds:
-	<input type="text" id="countTarget" onchange="updateTarget()"><br>
+	<!-- User input for timer -->
+	<div>
+		Seconds:
+		<input type="text" id="countTarget" onchange="updateTarget()" style="margin: 0px 0px 0px 00px; font-size: 30px;">
+	</div>
 
-	<table>
+	<!-- Timers -->
+	<table class="center">
 		<tr>
 			<th>Counting Up</th>
 			<th>Counting Down</th> 
