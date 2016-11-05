@@ -30,10 +30,16 @@ div {
 	font-size: 40px;
 }
 
+input {
+	margin: 0px 0px 0px 0px; 
+	font-size: 30px;"
+    font-family: 'Amatic SC', cursive;
+}
 th {
 	font-size: 40px;
 	font-style: bold;
 	padding: 40px 40px 0px 40px;
+	text-decoration: underline;
 }
 
 td {
