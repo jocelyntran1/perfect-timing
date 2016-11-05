@@ -1,2 +1,2 @@
 # perfect-timing
-Web-based stopwatch
+Web-based stopwatches. https://jocelyntran1.github.io/perfect-timing/
