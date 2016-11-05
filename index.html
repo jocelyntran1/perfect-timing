@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<script type="text/javascript">
+
+	// Amount of seconds for one day/hour/minute
+	const ONE_DAY = 86400;
+	const ONE_HOUR = 3600;
+	const ONE_MINUTE = 60;
+	
+	// Keep track of how any seconds have passed
+	var upSeconds = 0;
+	var downSeconds = 0;
+
+	// Keep track of whether a timer is paused
+	var upPaused = true;
+	var downPaused = true;
+
+	// User enters a number, reset one timer, sets the other to target
+	function updateTarget() {
+
+		// Sets new timer values
+		upSeconds = 0;
+		downSeconds = parseInt( document.getElementById("countTarget").value, 10 );
+
+		// Display the timers
+		document.getElementById("upDisplay").innerHTML = display(upSeconds);
+		document.getElementById("downDisplay").innerHTML = display(downSeconds);
+
+		// Enable buttons
+		document.getElementById("upStartButton").disabled = false;
+		document.getElementById("downStartButton").disabled = false;
+	}
+
+	// Returns the input (seconds) as a string with days, hours, mins, seconds
+	function display(seconds) {
+
+		// Preset values to 0
+		days = 0;
+		hours = 0;
+		mins = 0;
+
+		// Calculate time
+		if( seconds > ONE_DAY ) {
+			days = Math.floor( seconds/ ONE_DAY );
+			seconds %= ONE_DAY;
+		}
+		
+		if( seconds > ONE_HOUR ) {
+			hours = Math.floor( seconds/ ONE_HOUR );
+			seconds %= ONE_HOUR;
+		}		
+	
+		if( seconds > ONE_MINUTE ) {
+			mins = Math.floor( seconds/ ONE_MINUTE );
+			seconds %= ONE_MINUTE;
+		}
+
+		return days + " days " + hours + " hours " + mins + " minutes " + seconds + " seconds";
+	}
+
+	// Reset the up counter to 0
+	function resetUpCounter() {
+
+		upSeconds = 0;
+		document.getElementById("upDisplay").innerHTML = display( upSeconds );
+		document.getElementById("upStartButton").disabled = false;
+
+	}
+
+	// Reset the down counter to countTarget
+	function resetDownCounter() {
+
+		downSeconds = parseInt( document.getElementById("countTarget").value, 10);
+		document.getElementById("downDisplay").innerHTML = display( downSeconds );
+		document.getElementById("downStartButton").disabled = false;
+		
+	}
+
+	// Control the Up Counter
+	function toggleUpCounter() {
+
+		// Start/continue time
+		if( upPaused ) 
+			upIntervalId = setInterval( updateUpDisplay, 1000 );
+
+		// Pause time
+		else
+			clearInterval( upIntervalId );
+
+		// Toggle start/pause
+		upPaused = !upPaused;
+	}
+
+	// Control the Down Counter
+	function toggleDownCounter() {
+
+		// Start/continue time
+		if( downPaused )
+			downIntervalId = setInterval( updateDownDisplay, 1000 );
+
+		// Pause time
+		else
+			clearInterval( downIntervalId );
+
+		// Toggle start/pause
+		downPaused = !downPaused;
+
+	}
+
+	// Update the up timer display
+	function updateUpDisplay() {
+
+		var targetSeconds = parseInt( document.getElementById("countTarget").value, 10 );
+
+		// Time over, disable button
+		if ( upSeconds >= targetSeconds ) {
+
+			upPaused = true;
+			clearInterval( upIntervalId );
+			document.getElementById("upStartButton").disabled = true;
+
+		}
+
+		// Continue coutning up
+		else {
+
+			upSeconds++;
+			document.getElementById("upDisplay").innerHTML = display( upSeconds );
+
+		}
+
+	}
+
+	// Update the down timer display
+	function updateDownDisplay() {
+
+		// Time over, disable button
+		if( downSeconds <= 0 ) {
+
+			document.getElementById("downStartButton").disabled = true;
+			downPaused = true;
+			clearInterval( downIntervalId );
+
+		}
+
+		// Continue counting down
+		else {
+
+			downSeconds--;
+			document.getElementById("downDisplay").innerHTML = display( downSeconds );
+
+		}
+
+	}
+</script>
+</head>
+
+<body>
+
+	<h1>Perfect Timing!</h1>
+	<h3> A stopwatch that counts up and another stopwatch that counts down.</h3>
+
+	Seconds:
+	<input type="text" id="countTarget" onchange="updateTarget()"><br>
+
+	<table>
+		<tr>
+			<th>Counting Up</th>
+			<th>Counting Down</th> 
+		</tr>
+		<tr>
+			<td><p id="upDisplay">0 days 0 hours 0 minutes 0 seconds</p></td>
+			<td><p id="downDisplay">0 days 0 hours 0 minutes 0 seconds</p></td> 
+		</tr>
+		<tr>
+			<td><button id="upStartButton" onclick="toggleUpCounter()">Start/Pause</button></td>
+			<td><button id="downStartButton" onclick="toggleDownCounter()">Start/Pause</button></td> 
+		</tr>
+		<tr>
+			<td><button onclick="resetUpCounter()">Reset</button></td>
+			<td><button onclick="resetDownCounter()">Reset</button></td> 
+		</tr>
+	</table>
+
+</body>
+</html>
