@@ -29,9 +29,10 @@
 	// User enters a number, reset one timer, sets the other to target
 	function updateTarget() {
 
-		// Sets new timer values
+		// Set new timer values, checking for valid input
 		upSeconds = 0;
 		downSeconds = parseInt( document.getElementById("countTarget").value, 10 );
+		if( isNaN( downSeconds ) ) downSeconds = 0;
 
 		// Display the timers
 		document.getElementById("upDisplay").innerHTML = display(upSeconds);
@@ -175,7 +176,7 @@
 	<!-- User input for timer -->
 	<div>
 		Seconds:
-		<input type="number" id="countTarget" onchange="updateTarget()">
+		<input type="number" id="countTarget" onchange="updateTarget()" required="required">
 	</div>
 
 	<!-- Timers -->
@@ -201,6 +202,6 @@
 	<div class="footer">
 		<h3>Made by <a href="https://jocelyntran1.github.io/" target="_blank" style="text-decoration: underline;">Jocelyn Tran.</a></h3>
 	</div>
-	
+
 </body>
 </html>
